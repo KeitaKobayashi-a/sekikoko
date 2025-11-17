@@ -1,7 +1,7 @@
-module.exports = async (knex, userId) => {
+module.exports = async (knex, ticketNumber) => {
   await knex('seats')
-    .where('userId', userId)
-    .update({ is_seated: false, loc: null });
+    .where('ticket_number', ticketNumber)
+    .update({ is_seated: false, ticket_number: null });
   const data = await knex.select().table('seats');
   return data;
 };

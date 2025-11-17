@@ -26,7 +26,7 @@ export default function Seats() {
       }
     }
   }
-
+  
   return (
     <Box sx={{ p: 3, display: 'flex', flexWrap: 'wrap', gap: 2,  height:'80vh'}}>
       {seatGroups.map((group, index) => (

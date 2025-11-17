@@ -6,9 +6,10 @@ exports.up = async function (knex) {
   await knex.schema.createTable('seats', (table) => {
     table.increments('id').primary();
     table.integer('loc');
-    table.integer('userId');
+    table.integer('ticket_number');
     table.boolean('is_seated').notNullable();
   });
+
 };
 
 /**

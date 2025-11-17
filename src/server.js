@@ -3,19 +3,27 @@ const db = require('./db');
 const cors = require('cors');
 const readSeats = require('./handlers/readSeats');
 const deleteSeats = require('./handlers/deleteSeats');
+const cookieParser = require('cookie-parser');
+const receptionSeats = require('./handlers/receptionSeats');
 const PORT = process.env.PORT || 8080;
 const app = express();
 
 app.use(cors());
-
+app.use(cookieParser());
 app.use(express.json());
 
 app.get('/seats', async (req, res) => {
   res.json(await readSeats(db));
 });
 
-app.delete('/seats/:loc', async (req, res) => {
-  res.json(await deleteSeats(db, req.params.loc));
+app.delete('/seats', async (req, res) => {
+  res.json(await deleteSeats(db, req.cookies.ticketNumber));
+});
+app.post('/seats', async (req, res) => {
+  const ticketNumber = Math.floor(Math.random() * 100);
+  res.cookie('ticketNumber', ticketNumber);
+  
+  res.json({data:await receptionSeats(db, ticketNumber), ticketNumber});
 });
 
 app.listen(PORT, () => {
