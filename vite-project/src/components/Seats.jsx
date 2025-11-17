@@ -5,8 +5,11 @@ import {
   Typography,
   Stack,
 } from '@mui/material';
+import { useContext } from 'react';
+import { SeatContext } from '../context/SeatContext';
 
-export default function Seats({seats, setSeats}) {
+export default function Seats() {
+  const {seats, setSeats} = useContext(SeatContext)
   const seatGroups = Array.from({ length: 4 }, (_, g) =>
     Array.from({ length: 4 }, (_, i) => g * 4 + i + 1)
   );
@@ -24,7 +27,6 @@ export default function Seats({seats, setSeats}) {
     }
   }
 
-  console.log(seats)
   return (
     <Box sx={{ p: 3, display: 'flex', flexWrap: 'wrap', gap: 2,  height:'80vh'}}>
       {seatGroups.map((group, index) => (

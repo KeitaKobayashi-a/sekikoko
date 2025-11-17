@@ -1,16 +1,16 @@
-exports.seed = async function(knex) {
-
-const entries = (()=>{
-    const result = []
+exports.seed = async function (knex) {
+  const entries = (() => {
+    const result = [];
     for (let index = 1; index < 17; index++) {
-        result.push({
-            loc: index,
-            is_seated:false
-        })
+      result.push({
+        userId: index + 100,
+        loc: index,
+        is_seated: false,
+      });
     }
-    return result
-})()
+    return result;
+  })();
 
-  await knex("seats").del();
-  await knex("seats").insert(entries);
+  await knex('seats').del();
+  await knex('seats').insert(entries);
 };

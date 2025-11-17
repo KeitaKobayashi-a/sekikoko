@@ -2,6 +2,8 @@ import NavBar from "./components/NavBar";
 import Seats from "./components/Seats";
 import SimpleBottomNavigation from "./components/SimpleBottomNavigation";
 import { useEffect, useState } from "react";
+import { SeatContext } from "./context/SeatContext";
+
 
 export default function App() {
   
@@ -17,8 +19,10 @@ export default function App() {
   },[seats])
 
   return<>
+    <SeatContext.Provider value={{seats, setSeats}}>
       <NavBar/>
-      <Seats seats={seats} setSeats={setSeats}/>
+      <Seats/>
       <SimpleBottomNavigation/>
+    </SeatContext.Provider>
       </>
 }
