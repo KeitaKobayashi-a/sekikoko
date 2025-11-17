@@ -1,10 +1,24 @@
 import NavBar from "./components/NavBar";
 import Seats from "./components/Seats";
 import SimpleBottomNavigation from "./components/SimpleBottomNavigation";
+import { useEffect, useState } from "react";
+
 export default function App() {
+  
+  const [seats, setSeats] = useState([])
+
+  useEffect(()=>{
+    async function getSeats(){
+      const res = await fetch('/seats')
+      const json = await res.json()
+      setSeats(json)
+    }
+    getSeats()
+  },[seats])
+
   return<>
       <NavBar/>
-      <Seats/>
+      <Seats seats={seats} setSeats={setSeats}/>
       <SimpleBottomNavigation/>
       </>
 }
