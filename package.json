@@ -4,12 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "db:migrate-make": "npx knex migrate:make create_seats_table --knexfile ./src/db/knexfile.js",
+     "migrate-latest": "npx knex migrate:latest --knexfile src/db/knexfile.js",
+    "migrate-down": "npx knex migrate:down --knexfile src/db/knexfile.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+      "knex": "^3.1.0",
+    "pg": "^8.13.1"
   }
 }
