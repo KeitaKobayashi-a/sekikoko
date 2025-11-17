@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "db:migrate-make": "npx knex migrate:make create_seats_table --knexfile ./src/db/knexfile.js",
      "migrate-latest": "npx knex migrate:latest --knexfile src/db/knexfile.js",
-    "migrate-down": "npx knex migrate:down --knexfile src/db/knexfile.js"
+    "migrate-down": "npx knex migrate:down --knexfile src/db/knexfile.js",
+    "seed-data": "npx knex seed:run --knexfile src/db/knexfile.js"
   },
   "keywords": [],
   "author": "",
