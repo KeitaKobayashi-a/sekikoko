@@ -17,16 +17,16 @@ function setupServer() {
     res.json(await readSeats(db));
   });
 
-  app.delete('/seats', async (req, res) => {
-    res.json(await deleteSeats(db, req.cookies.ticketNumber));
-  });
   app.post('/seats', async (req, res) => {
     const ticketNumber = Math.floor(Math.random() * 100);
     res.cookie('ticketNumber', ticketNumber);
-
+    
     res.json({ data: await receptionSeats(db, ticketNumber), ticketNumber });
   });
-
+  
+  app.delete('/seats', async (req, res) => {
+    res.json(await deleteSeats(db, req.cookies.ticketNumber));
+  });
   return app;
 }
 module.exports = {

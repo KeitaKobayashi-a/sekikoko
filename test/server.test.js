@@ -17,7 +17,21 @@ describe('test', () => {
   });
 
   it('get information about seat availability', async () => {
-    const res = await request.get('/seats/');
+    const res = await request.get('/seats');
     expect(res.body).to.have.lengthOf(16);
+  });
+
+  it('save a seat', async () => {
+    const res = await request.post('/seats');
+    expect(res.body.data.data[15].is_seated).to.be.true;
+  });
+
+  it('leave a seat', async () => {
+    const postRes = await request.post('/seats');
+    const ticketNumber = postRes.body.data.data[15].ticket_number;
+    const res = await request
+      .delete('/seats')
+      .set('Cookie', `ticketNumber=${ticketNumber}`);
+    expect(res.body[15].is_seated).to.be.false;
   });
 });
