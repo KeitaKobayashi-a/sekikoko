@@ -10,12 +10,10 @@ import { useContext, useState } from 'react';
 import { SeatContext } from '../context/SeatContext';
 
 export default function NavBar() {
-  const { setSeats } = useContext(SeatContext);
-  const [ticketNumber, setTicketNumber] = useState();
+  const { setSeats, setIsClient } = useContext(SeatContext);
   const handleReception = async () => {
     const res = await fetch(`/seats`, { method: 'POST' });
     const json = await res.json();
-    setTicketNumber(json.ticketNumber);
     setSeats(json.data);
   };
 
@@ -36,15 +34,15 @@ export default function NavBar() {
             席ココ
           </Typography>
           <Stack spacing={2} direction="row">
-            {ticketNumber && (
-              <div>あなたの受付番号は {ticketNumber} 番です</div>
-            )}
+            <Button onClick={()=>setIsClient(false)} variant="contained" color="secondary">
+              座席
+            </Button>
             <Button
-              onClick={handleReception}
+              onClick={()=> setIsClient(true)}
               variant="contained"
               color="secondary"
             >
-              受付する
+              受付
             </Button>
             <Button variant="contained" color="secondary">
               ログイン

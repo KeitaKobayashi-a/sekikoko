@@ -3,10 +3,10 @@ module.exports = async (knex, ticketNumber) => {
     .where('is_seated', false)
     .orderBy('loc')
     .first();
-  await knex('seats')
+   await knex('seats')
     .where('id', target.id)
     .update({ ticket_number: ticketNumber, is_seated: true });
 
-  const data = await knex.select().table('seats');
-  return data;
+  const returns = {data:await knex.select().table('seats'), target};
+  return returns;
 };

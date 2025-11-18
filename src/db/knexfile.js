@@ -1,9 +1,11 @@
+require('dotenv').config();
+
 module.exports = {
   development: {
     client: 'pg',
     connection: {
-      user: 'postgres',
-      database: 'sekikoko',
+      user: process.env.PGUSER,
+      database: process.env.PGDATABASE,
     },
     migrations: {
       directory: './data/migrations',

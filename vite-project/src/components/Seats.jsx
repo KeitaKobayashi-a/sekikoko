@@ -9,7 +9,8 @@ import { useContext } from 'react';
 import { SeatContext } from '../context/SeatContext';
 
 export default function Seats() {
-  const {seats, setSeats} = useContext(SeatContext)
+  const {seats, setSeats, isClient, setIsClient} = useContext(SeatContext)
+  if (isClient) return
   const seatGroups = Array.from({ length: 4 }, (_, g) =>
     Array.from({ length: 4 }, (_, i) => g * 4 + i + 1)
   );
