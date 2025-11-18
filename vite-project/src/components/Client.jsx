@@ -13,12 +13,12 @@ export default function Client() {
   const handleReception = async () => {
     const res = await fetch(`/seats`, { method: 'POST' });
     const json = await res.json();
-    setLoc(json.data.target.loc);
+    json.data.target.loc ? setLoc(json.data.target.loc) : setLoc(null);
     setTicketNumber(json.ticketNumber);
   };
   return (
     <>
-      <Box component="section" sx={{ p: 2, border: '1px dashed grey', mt: 3 }}>
+      <Box component="section" sx={{ p: 2, mt: 3 }}>
         <Stack spacing={2} alignItems="center">
           <Button
             onClick={handleReception}
@@ -29,13 +29,16 @@ export default function Client() {
             受付する
           </Button>
           <Typography align="center" variant="h3">
-            {ticketNumber && (
-              <>
-                受付番号{ticketNumber}のお客様
-                <br />
-                {loc}番のお席にどうぞ
-              </>
-            )}
+            {ticketNumber &&
+              (loc ? (
+                <>
+                  受付番号{ticketNumber}のお客様
+                  <br />
+                  {loc}番のお席にどうぞ
+                </>
+              ) : (
+                <>受付番号{ticketNumber}でお待ちください</>
+              ))}
           </Typography>
         </Stack>
       </Box>

@@ -34,4 +34,12 @@ describe('test', () => {
       .set('Cookie', `ticketNumber=${ticketNumber}`);
     expect(res.body[15].is_seated).to.be.false;
   });
+
+  it('on the waiting list', async () => {
+    for (let i = 1; i <= 16; i++) {
+      await request.post('/seats');
+    }
+    const res = await request.post('/seats');
+    expect(res.body.ticketNumber).to.be.a('number');
+  });
 });

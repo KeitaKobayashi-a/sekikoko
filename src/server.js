@@ -18,12 +18,19 @@ function setupServer() {
   });
 
   app.post('/seats', async (req, res) => {
-    const ticketNumber = Math.floor(Math.random() * 100);
-    res.cookie('ticketNumber', ticketNumber);
-    
-    res.json({ data: await receptionSeats(db, ticketNumber), ticketNumber });
+    const ticketNumber = Math.floor(Math.random() * 1000);
+    try {
+      res.cookie('ticketNumber', ticketNumber);
+      res.json({ data: await receptionSeats(db, ticketNumber), ticketNumber });
+    } catch (error) {
+      res.cookie('ticketNumber', ticketNumber);
+      res.json({
+        data: { target: `${ticketNumber}番でお待ちください` },
+        ticketNumber,
+      });
+    }
   });
-  
+
   app.delete('/seats', async (req, res) => {
     res.json(await deleteSeats(db, req.cookies.ticketNumber));
   });
