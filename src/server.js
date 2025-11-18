@@ -6,6 +6,10 @@ const deleteSeats = require('./handlers/deleteSeats');
 const cookieParser = require('cookie-parser');
 const receptionSeats = require('./handlers/receptionSeats');
 const PORT = process.env.PORT || 8080;
+
+function setupServer() {
+  
+
 const app = express();
 
 app.use(cors());
@@ -31,3 +35,7 @@ app.listen(PORT, () => {
     `Is your server running? Well, you better go catch it, then! http://localhost:${PORT}`
   );
 });
+}
+module.exports = {
+  setupServer,
+};
