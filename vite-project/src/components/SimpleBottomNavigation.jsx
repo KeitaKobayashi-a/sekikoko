@@ -13,12 +13,13 @@ import { useContext } from 'react';
 import { SeatContext } from '../context/SeatContext';
 
 export default function SimpleBottomNavigation() {
-  const {seats, setSeats} = useContext(SeatContext)
+  const {seats, setSeats, setWitList, waitList} = useContext(SeatContext)
   const [value, setValue] = React.useState(0);
-  const handleBack = async() => {
+  const handleLeave = async() => {
         const res = await fetch(`/seats`,{method: 'DELETE'})
          const json = await res.json()
-         setSeats(json)
+         setWitList(pre => pre.filter(ticket => ticket === json.ticketNumber))
+         setSeats(json.data)
   }
 
   return (
@@ -31,7 +32,7 @@ export default function SimpleBottomNavigation() {
         }}
         sx={{bgcolor: grey[100]}}
       >
-        <BottomNavigationAction onClick={handleBack} label="退席" icon={<DirectionsWalkIcon />} />
+        <BottomNavigationAction onClick={handleLeave} label="退席" icon={<DirectionsWalkIcon />} />
         <BottomNavigationAction label="受付" icon={<EditNoteIcon />} />
         <BottomNavigationAction label="履歴" icon={<WorkHistoryIcon />} />
       </BottomNavigation>

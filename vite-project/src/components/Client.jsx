@@ -2,19 +2,22 @@ import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import { Button } from '@mui/material';
 import { SeatContext } from '../context/SeatContext';
-import { use, useContext, useState } from 'react';
+import {  useContext, useState } from 'react';
 import Typography from '@mui/material/Typography';
+import WaitList from './WaitList';
 
 export default function Client() {
-  const { isClient, setIsClient } = useContext(SeatContext);
+  const { isClient, setWaitList } = useContext(SeatContext);
   const [loc, setLoc] = useState(null);
   const [ticketNumber, setTicketNumber] = useState(null);
+
   if (!isClient) return;
   const handleReception = async () => {
     const res = await fetch(`/seats`, { method: 'POST' });
     const json = await res.json();
-    json.data.target.loc ? setLoc(json.data.target.loc) : setLoc(null);
+    json.data.target.loc ? setLoc(json.data.target.loc) : setLoc(null) & setWaitList(pre => [...pre, json.ticketNumber]);
     setTicketNumber(json.ticketNumber);
+    
   };
   return (
     <>
@@ -42,6 +45,7 @@ export default function Client() {
           </Typography>
         </Stack>
       </Box>
+      <WaitList/>
     </>
   );
 }
