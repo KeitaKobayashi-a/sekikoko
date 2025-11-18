@@ -1,7 +1,7 @@
 exports.seed = async function (knex) {
   const entries = (() => {
     const result = [];
-    for (let index = 1; index < 17; index++) {
+    for (let index = 1; index <= 4; index++) {
       result.push({
         loc: index,
         ticket_number:index+50,

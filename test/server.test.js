@@ -18,21 +18,22 @@ describe('test', () => {
 
   it('get information about seat availability', async () => {
     const res = await request.get('/seats');
-    expect(res.body).to.have.lengthOf(16);
+    expect(res.body).to.have.lengthOf(4);
   });
 
   it('save a seat', async () => {
     const res = await request.post('/seats');
-    expect(res.body.data.data[15].is_seated).to.be.true;
+    expect(res.body.data.data[3].is_seated).to.be.true;
   });
 
   it('leave a seat', async () => {
     const postRes = await request.post('/seats');
-    const ticketNumber = postRes.body.data.data[15].ticket_number;
+    const ticketNumber = postRes.body.data.data[3].ticket_number;
+
     const res = await request
       .delete('/seats')
       .set('Cookie', `ticketNumber=${ticketNumber}`);
-    expect(res.body[15].is_seated).to.be.false;
+    expect(res.body.data[3].is_seated).to.be.false;
   });
 
   it('on the waiting list', async () => {

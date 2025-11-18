@@ -7,9 +7,9 @@ import Typography from '@mui/material/Typography';
 import WaitList from './WaitList';
 
 export default function Client() {
-  const { isClient, setWaitList } = useContext(SeatContext);
+  const { isClient, setWaitList, ticketNumber, setTicketNumber } = useContext(SeatContext);
   const [loc, setLoc] = useState(null);
-  const [ticketNumber, setTicketNumber] = useState(null);
+
 
   if (!isClient) return;
   const handleReception = async () => {

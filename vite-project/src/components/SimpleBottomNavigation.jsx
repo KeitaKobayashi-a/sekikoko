@@ -13,13 +13,14 @@ import { useContext } from 'react';
 import { SeatContext } from '../context/SeatContext';
 
 export default function SimpleBottomNavigation() {
-  const {seats, setSeats, setWitList, waitList} = useContext(SeatContext)
+  const {seats, setSeats, setWaitList, waitList, setTicketNumber} = useContext(SeatContext)
   const [value, setValue] = React.useState(0);
   const handleLeave = async() => {
         const res = await fetch(`/seats`,{method: 'DELETE'})
          const json = await res.json()
-         setWitList(pre => pre.filter(ticket => ticket === json.ticketNumber))
+         setWaitList(waitList.slice(1,waitList.length-1))
          setSeats(json.data)
+         setTicketNumber(null)
   }
 
   return (

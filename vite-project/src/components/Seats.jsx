@@ -11,12 +11,12 @@ import { SeatContext } from '../context/SeatContext';
 export default function Seats() {
   const {seats, setSeats, isClient, setIsClient} = useContext(SeatContext)
   if (isClient) return
-  const seatGroups = Array.from({ length: 4 }, (_, g) =>
-    Array.from({ length: 4 }, (_, i) => g * 4 + i + 1)
+  const seatGroups = Array.from({ length: 1 }, (_, g) =>
+    Array.from({ length: 4 }, (_, i) => g * 1 + i + 1)
   );
 
   const parseGroup = (txt) => {
-    const groups = ['A', 'B', 'C', 'D'];
+    const groups = ['A'];
     return groups[txt];
   };
 

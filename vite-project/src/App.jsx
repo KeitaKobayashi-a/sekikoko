@@ -11,6 +11,7 @@ export default function App() {
   const [seats, setSeats] = useState([])
   const [isClient, setIsClient] = useState(true)
     const [waitList, setWaitList] = useState([])
+      const [ticketNumber, setTicketNumber] = useState(null);
 
   useEffect(()=>{
     async function getSeats(){
@@ -22,7 +23,7 @@ export default function App() {
   },[seats])
 
   return<>
-    <SeatContext.Provider value={{seats, setSeats, isClient, setIsClient, waitList, setWaitList}}>
+    <SeatContext.Provider value={{seats, setSeats, isClient, setIsClient, waitList, setWaitList, ticketNumber, setTicketNumber}}>
       <NavBar/>
       <Seats/>
       <Client></Client>
