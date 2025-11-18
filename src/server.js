@@ -5,6 +5,9 @@ const readSeats = require('./handlers/readSeats');
 const deleteSeats = require('./handlers/deleteSeats');
 const cookieParser = require('cookie-parser');
 const receptionSeats = require('./handlers/receptionSeats');
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+const session = require('express-session');
 
 function setupServer() {
   const app = express();
@@ -12,6 +15,47 @@ function setupServer() {
   app.use(cors());
   app.use(cookieParser());
   app.use(express.json());
+
+  app.use(
+    session({
+      secret: 'my secret',
+      resave: false,
+      saveUninitialized: false,
+    })
+  );
+
+  app.use(passport.initialize());
+  app.use(passport.session());
+
+  passport.use(
+    new LocalStrategy(async function (username, password, done) {
+      const user = await db('users').where({ username }).first();
+      if (!user) {
+        return done(null, false, {
+          message: 'ユーザーIDが正しくありません。',
+        });
+      }
+
+      if (user.password !== password)
+        return done(null, false, {
+          message: 'パスワードが正しくありません。',
+        });
+      return done(null, user);
+    })
+  );
+
+  passport.serializeUser((user, done) => {
+    done(null, user.id);
+  });
+
+  passport.deserializeUser(async (id, done) => {
+    try {
+      const user = await db('users').where({ id }).first();
+      done(null, user);
+    } catch (err) {
+      done(err);
+    }
+  });
 
   app.get('/seats', async (req, res) => {
     res.json(await readSeats(db));
@@ -29,6 +73,10 @@ function setupServer() {
         ticketNumber,
       });
     }
+  });
+
+  app.post('/login', passport.authenticate('local'), (req, res) => {
+    res.json({ login: true, user: req.user });
   });
 
   app.delete('/seats', async (req, res) => {

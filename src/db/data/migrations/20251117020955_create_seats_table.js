@@ -10,6 +10,11 @@ exports.up = async function (knex) {
     table.boolean('is_seated').notNullable();
   });
 
+  await knex.schema.createTable('users', (table) => {
+    table.increments('id').primary();
+    table.string('username').notNullable().unique();
+    table.string('password').notNullable();
+  });
 };
 
 /**
@@ -18,4 +23,5 @@ exports.up = async function (knex) {
  */
 exports.down = async function (knex) {
   await knex.schema.dropTable('seats');
+  await knex.schema.dropTable('users');
 };
