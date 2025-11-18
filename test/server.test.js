@@ -17,8 +17,7 @@ describe('test', () => {
   });
 
   it('get information about seat availability', async () => {
-    const res = await request.get('/seats');
-    console.log(res.body);
-    expect(res.body).to.have.lengthOf(3);
+    const res = await request.get('/seats/');
+    expect(res.body).to.have.lengthOf(16);
   });
 });

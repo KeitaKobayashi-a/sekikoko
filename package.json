@@ -2,13 +2,13 @@
   "name": "sekikoko",
   "version": "1.0.0",
   "description": "",
-  "main": "./src/server.js",
+  "main": "./src/index.js",
   "scripts": {
     "db:migrate-make": "npx knex migrate:make create_seats_table --knexfile ./src/db/knexfile.js",
     "migrate-latest": "npx knex migrate:latest --knexfile src/db/knexfile.js && npx knex seed:run --knexfile src/db/knexfile.js",
     "migrate-down": "npx knex migrate:down --knexfile src/db/knexfile.js",
     "seed-data": "npx knex seed:run --knexfile src/db/knexfile.js",
-    "test": "mocha"
+    "test": "mocha --exit"
   },
   "keywords": [],
   "author": "",
