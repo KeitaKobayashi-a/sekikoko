@@ -13,28 +13,55 @@ import { useContext } from 'react';
 import { SeatContext } from '../context/SeatContext';
 
 export default function SimpleBottomNavigation() {
-  const {seats, setSeats, setWaitList, waitList, setTicketNumber, setIsClient} = useContext(SeatContext)
+  const {
+    seats,
+    setSeats,
+    setWaitList,
+    waitList,
+    setTicketNumber,
+    setIsClient,
+    setLoginUser,
+  } = useContext(SeatContext);
   const [value, setValue] = React.useState(0);
-  const handleLeave = async() => {
-        const res = await fetch(`/seats`,{method: 'DELETE', credentials: 'include',})
-         const json = await res.json()
-         setWaitList(waitList.slice(1,waitList.length-1))
-         setSeats(json.data)
-         setTicketNumber(null)
-  }
+  const handleLeave = async () => {
+    const res = await fetch(`/seats`, {
+      method: 'DELETE',
+      credentials: 'include',
+    });
+    const json = await res.json();
+    setWaitList(waitList.slice(1, waitList.length - 1));
+    setSeats(json.data);
+    setTicketNumber(null);
+
+    await fetch('/session', {
+      method: 'DELETE',
+      credentials: 'include',
+    });
+    setLoginUser('');
+  };
 
   return (
-    <Box sx={{ width: '100%', position:'fixed', bottom: 0}}>
+    <Box sx={{ width: '100%', position: 'fixed', bottom: 0 }}>
       <BottomNavigation
         showLabels
         value={value}
         onChange={(event, newValue) => {
           setValue(newValue);
         }}
-        sx={{bgcolor: grey[100]}}
+        sx={{ bgcolor: grey[100] }}
       >
-        <BottomNavigationAction onClick={handleLeave} label="退席" icon={<DirectionsWalkIcon />} />
-        <BottomNavigationAction onClick={() => {setIsClient(true)}} label="受付" icon={<EditNoteIcon />} />
+        <BottomNavigationAction
+          onClick={handleLeave}
+          label="退席"
+          icon={<DirectionsWalkIcon />}
+        />
+        <BottomNavigationAction
+          onClick={() => {
+            setIsClient(true);
+          }}
+          label="受付"
+          icon={<EditNoteIcon />}
+        />
         <BottomNavigationAction label="履歴" icon={<WorkHistoryIcon />} />
       </BottomNavigation>
     </Box>

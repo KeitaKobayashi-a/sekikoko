@@ -14,7 +14,7 @@ export default function SignIn() {
       username: data.get('username'),
       password: data.get('password'),
     };
-    const res = await fetch('/login', {
+    const res = await fetch('/session', {
       method: 'POST',
       body: JSON.stringify(payload),
       headers: {

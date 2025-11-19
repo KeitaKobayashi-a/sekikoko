@@ -6,16 +6,12 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Stack } from '@mui/material';
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { SeatContext } from '../context/SeatContext';
+import Chip from '@mui/material/Chip';
 
 export default function NavBar() {
-  const { setSeats, setIsClient, loginUser } = useContext(SeatContext);
-  const handleReception = async () => {
-    const res = await fetch(`/seats`, { method: 'POST' });
-    const json = await res.json();
-    setSeats(json.data);
-  };
+  const { setIsClient, loginUser,setLoginUser } = useContext(SeatContext);
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -31,9 +27,22 @@ export default function NavBar() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            席ココ {loginUser && `ようこそ${loginUser}`}
+            席ココ
           </Typography>
           <Stack spacing={2} direction="row">
+            {loginUser && (
+              <Chip
+                label={`ようこそ、${loginUser}さん`}
+                size="large"
+                variant="outlined"
+                sx={{
+                  ml: 2,
+                  borderColor: 'rgba(255,255,255,0.7)',
+                  color: 'rgba(255,255,255,0.9)',
+                  bgcolor: 'rgba(255,255,255,0.12)',
+                }}
+              />
+            )}
             <Button
               onClick={() => setIsClient(false)}
               variant="contained"
@@ -47,6 +56,19 @@ export default function NavBar() {
               color="secondary"
             >
               受付
+            </Button>
+            <Button
+              onClick={async () => {
+                await fetch('/session', {
+                  method: 'DELETE',
+                  credentials: 'include',
+                });
+                setLoginUser('');
+              }}
+              variant="contained"
+              color="secondary"
+            >
+              ログアウト
             </Button>
           </Stack>
         </Toolbar>

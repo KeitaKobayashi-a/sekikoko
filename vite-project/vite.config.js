@@ -9,7 +9,7 @@ export default defineConfig({
       '/seats': {
         target: 'http://localhost:3000',
       },
-      '/login': {
+      '/session': {
         target: 'http://localhost:3000',
       },
     },

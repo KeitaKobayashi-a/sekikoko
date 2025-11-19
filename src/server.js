@@ -100,10 +100,18 @@ function setupServer() {
     }
   });
 
-  app.post('/login', passport.authenticate('local'), (req, res) => {
+  app.post('/session', passport.authenticate('local'), (req, res) => {
     res.json({ login: true, user: req.user });
   });
 
+  app.delete('/session', function (req, res, next) {
+    req.logout(function (err) {
+      if (err) {
+        return next(err);
+      }
+      res.end();
+    });
+  });
   app.delete('/seats', isLoggedIn, async (req, res) => {
     res.json(await deleteSeats(db, req.user.username));
   });
