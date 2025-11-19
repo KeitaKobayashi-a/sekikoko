@@ -16,7 +16,14 @@ function setupServer() {
   const app = express();
   const staticPath = path.join(__dirname, '..', 'vite-project', 'dist');
 
-  app.use(cors());
+  if (process.env.NODE_ENV === 'development') {
+    app.use(
+      cors({
+        origin: 'http://localhost:5173',
+        credentials: true,
+      })
+    );
+  }
   app.use(cookieParser());
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
@@ -72,8 +79,12 @@ function setupServer() {
   app.post('/seats', async (req, res) => {
     const ticketNumber = Math.floor(Math.random() * 1000);
     try {
+      const username = req.user.username;
       res.cookie('ticketNumber', ticketNumber);
-      res.json({ data: await receptionSeats(db, ticketNumber), ticketNumber });
+      res.json({
+        data: await receptionSeats(db, ticketNumber, username),
+        ticketNumber,
+      });
     } catch (error) {
       res.cookie('ticketNumber', ticketNumber);
       res.json({
@@ -88,7 +99,8 @@ function setupServer() {
   });
 
   app.delete('/seats', async (req, res) => {
-    res.json(await deleteSeats(db, req.cookies.ticketNumber));
+    console.log(req.user);
+    res.json(await deleteSeats(db, req.user.username));
   });
 
   app.get('/', (req, res) => {

@@ -7,6 +7,7 @@ exports.up = async function (knex) {
     table.increments('id').primary();
     table.integer('loc');
     table.integer('ticket_number');
+    table.string('username');
     table.boolean('is_seated').notNullable();
   });
 

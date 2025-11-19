@@ -16,7 +16,7 @@ export default function SimpleBottomNavigation() {
   const {seats, setSeats, setWaitList, waitList, setTicketNumber, setIsClient} = useContext(SeatContext)
   const [value, setValue] = React.useState(0);
   const handleLeave = async() => {
-        const res = await fetch(`/seats`,{method: 'DELETE'})
+        const res = await fetch(`/seats`,{method: 'DELETE', credentials: 'include',})
          const json = await res.json()
          setWaitList(waitList.slice(1,waitList.length-1))
          setSeats(json.data)
