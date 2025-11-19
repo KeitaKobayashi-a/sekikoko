@@ -13,10 +13,15 @@ export default function Client() {
 
   if (!isClient) return;
   const handleReception = async () => {
-    const res = await fetch(`/seats`, { method: 'POST' ,  credentials: 'include',});
-    const json = await res.json();
-    json.data.target.loc ? setLoc(json.data.target.loc) : setLoc(null) & setWaitList(pre => [...pre, json.ticketNumber]);
-    setTicketNumber(json.ticketNumber);
+    try {
+      const res = await fetch(`/seats`, { method: 'POST' ,  credentials: 'include',});
+      const json = await res.json();
+      json.data.target.loc ? setLoc(json.data.target.loc) : setLoc(null) & setWaitList(pre => [...pre, json.ticketNumber]);
+      setTicketNumber(json.ticketNumber);
+      
+    } catch (error) {
+      console.log(error)
+    }
     
   };
   return (
