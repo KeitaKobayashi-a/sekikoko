@@ -10,7 +10,7 @@ import { useContext, useState } from 'react';
 import { SeatContext } from '../context/SeatContext';
 
 export default function NavBar() {
-  const { setSeats, setIsClient } = useContext(SeatContext);
+  const { setSeats, setIsClient, loginUser } = useContext(SeatContext);
   const handleReception = async () => {
     const res = await fetch(`/seats`, { method: 'POST' });
     const json = await res.json();
@@ -31,7 +31,7 @@ export default function NavBar() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            席ココ
+            席ココ {loginUser && `ようこそ${loginUser}`}
           </Typography>
           <Stack spacing={2} direction="row">
             <Button onClick={()=>setIsClient(false)} variant="contained" color="secondary">

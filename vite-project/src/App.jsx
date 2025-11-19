@@ -4,12 +4,16 @@ import SimpleBottomNavigation from './components/SimpleBottomNavigation';
 import Client from './components/Client';
 import { useEffect, useState } from 'react';
 import { SeatContext } from './context/SeatContext';
+import SignIn from './components/SignIn';
+import Reception from './components/Reception';
 
 export default function App() {
   const [seats, setSeats] = useState([]);
   const [isClient, setIsClient] = useState(true);
   const [waitList, setWaitList] = useState([]);
   const [ticketNumber, setTicketNumber] = useState(null);
+    const [loginUser, setLoginUser] = useState('');
+
 
   useEffect(() => {
     async function getSeats() {
@@ -32,11 +36,13 @@ export default function App() {
           setWaitList,
           ticketNumber,
           setTicketNumber,
+          loginUser,
+          setLoginUser
         }}
       >
         <NavBar />
         <Seats />
-        <Client></Client>
+        <Reception/>
         <SimpleBottomNavigation />
       </SeatContext.Provider>
     </>

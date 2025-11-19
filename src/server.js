@@ -8,6 +8,8 @@ const receptionSeats = require('./handlers/receptionSeats');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const session = require('express-session');
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
 function setupServer() {
   const app = express();
@@ -15,6 +17,7 @@ function setupServer() {
   app.use(cors());
   app.use(cookieParser());
   app.use(express.json());
+  app.use(express.urlencoded({ extended: true }));
 
   app.use(
     session({
@@ -36,7 +39,9 @@ function setupServer() {
         });
       }
 
-      if (user.password !== password)
+      const isMatch = await bcrypt.compare(password, user.password);
+
+      if (!isMatch)
         return done(null, false, {
           message: 'パスワードが正しくありません。',
         });
