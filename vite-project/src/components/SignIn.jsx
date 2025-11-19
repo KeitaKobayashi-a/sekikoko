@@ -9,6 +9,7 @@ export default function SignIn() {
     const {setLoginUser} = useContext(SeatContext)
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const form = e.target
     const data = new FormData(e.target);
     const payload = {
       username: data.get('username'),
@@ -24,6 +25,7 @@ export default function SignIn() {
     });
     const json = await res.json()
     setLoginUser(json.user.username)
+    form.reset()
   };
   return (
     <Box
