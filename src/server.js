@@ -105,7 +105,6 @@ function setupServer() {
   });
 
   app.delete('/seats', isLoggedIn, async (req, res) => {
-    console.log(req.user);
     res.json(await deleteSeats(db, req.user.username));
   });
 
