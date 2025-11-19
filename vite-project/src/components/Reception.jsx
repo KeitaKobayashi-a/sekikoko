@@ -1,27 +1,17 @@
-// Home.jsx みたいな親コンポーネントを想定
-import { Box, Grid } from '@mui/material';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
 import SignIn from './SignIn';
 import Client from './Client';
 
 export default function Reception() {
   return (
-    <Box sx={{ p: 3 }}>
-      <Grid container spacing={2}>
-        <Grid item xs={12} md={3}>
-          <SignIn />
+    <Box sx={{ flexGrow: 1 , height: '100vh' }}>
+      <Grid container spacing={2} sx={{height: '100%'}}>
+        <Grid p={3} size={9} sx={{height: '100%' }}>
+          <Client />
         </Grid>
-
-        <Grid
-          item
-          xs={12}
-          md={9}
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          <Client /> 
+        <Grid p={3} size={3} sx={{ bgcolor: ' #edf5efff' , height: '100%' }}>
+          <SignIn />
         </Grid>
       </Grid>
     </Box>
