@@ -72,10 +72,10 @@ function setupServer() {
   });
 
   const isLoggedIn = (req, res, next) => {
-    if (!req.isAuthenticated()) {
-      return res.end();
+    if (req.isAuthenticated && req.isAuthenticated()) {
+      return next();
     }
-    next();
+    return res.status(401).json({ message: 'ログインしてください' });
   };
 
   app.get('/seats', async (req, res) => {
