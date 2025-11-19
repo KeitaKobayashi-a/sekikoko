@@ -91,7 +91,7 @@ function setupServer() {
     res.json(await deleteSeats(db, req.cookies.ticketNumber));
   });
 
-  app.get('*', (req, res) => {
+  app.get('/', (req, res) => {
     res.sendFile(path.join(staticPath, 'index.html'));
   });
   return app;
