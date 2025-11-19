@@ -4,7 +4,7 @@
   "description": "",
   "main": "./src/index.js",
   "scripts": {
-    "build": "npm install && cd vite-project && npm install && npm run build && cd .. && npm run migrate-latest",,
+    "build": "npm install && cd vite-project && npm install && npm run build && cd .. && npm run migrate-latest",
     "db:migrate-make": "npx knex migrate:make create_seats_table --knexfile ./src/db/knexfile.js",
     "migrate-latest": "npx knex migrate:latest --knexfile src/db/knexfile.js && npx knex seed:run --knexfile src/db/knexfile.js",
     "migrate-down": "npx knex migrate:down --knexfile src/db/knexfile.js",
