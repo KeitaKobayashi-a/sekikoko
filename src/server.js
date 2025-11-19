@@ -10,14 +10,17 @@ const LocalStrategy = require('passport-local').Strategy;
 const session = require('express-session');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
+const path = require('path');
 
 function setupServer() {
   const app = express();
+  const staticPath = path.join(__dirname, '..', 'vite-project', 'dist');
 
   app.use(cors());
   app.use(cookieParser());
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
+  app.use(express.static(staticPath));
 
   app.use(
     session({
@@ -86,6 +89,10 @@ function setupServer() {
 
   app.delete('/seats', async (req, res) => {
     res.json(await deleteSeats(db, req.cookies.ticketNumber));
+  });
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(staticPath, 'index.html'));
   });
   return app;
 }
