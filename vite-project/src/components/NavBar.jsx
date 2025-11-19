@@ -34,18 +34,19 @@ export default function NavBar() {
             席ココ {loginUser && `ようこそ${loginUser}`}
           </Typography>
           <Stack spacing={2} direction="row">
-            <Button onClick={()=>setIsClient(false)} variant="contained" color="secondary">
+            <Button
+              onClick={() => setIsClient(false)}
+              variant="contained"
+              color="secondary"
+            >
               座席
             </Button>
             <Button
-              onClick={()=> setIsClient(true)}
+              onClick={() => setIsClient(true)}
               variant="contained"
               color="secondary"
             >
               受付
-            </Button>
-            <Button variant="contained" color="secondary">
-              ログイン
             </Button>
           </Stack>
         </Toolbar>

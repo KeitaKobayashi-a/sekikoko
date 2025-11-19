@@ -43,6 +43,7 @@ function setupServer() {
   passport.use(
     new LocalStrategy(async function (username, password, done) {
       const user = await db('users').where({ username }).first();
+
       if (!user) {
         return done(null, false, {
           message: 'ユーザーIDが正しくありません。',
@@ -72,11 +73,18 @@ function setupServer() {
     }
   });
 
+  const isLoggedIn = (req, res, next) => {
+    if (!req.isAuthenticated()) {
+      return res.end();
+    }
+    next();
+  };
+
   app.get('/seats', async (req, res) => {
     res.json(await readSeats(db));
   });
 
-  app.post('/seats', async (req, res) => {
+  app.post('/seats', isLoggedIn, async (req, res) => {
     const ticketNumber = Math.floor(Math.random() * 1000);
     try {
       const username = req.user.username;
@@ -98,7 +106,7 @@ function setupServer() {
     res.json({ login: true, user: req.user });
   });
 
-  app.delete('/seats', async (req, res) => {
+  app.delete('/seats', isLoggedIn, async (req, res) => {
     console.log(req.user);
     res.json(await deleteSeats(db, req.user.username));
   });

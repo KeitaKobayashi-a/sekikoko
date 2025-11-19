@@ -37,7 +37,7 @@ export default function Seats() {
   
   return (
     <Box sx={{ p: 3, display: 'flex', flexWrap: 'wrap', gap: 2,  height:'80vh', verticalAlign:'center',justifyContent: 'center',
-    alignItems: 'center',}}>
+    alignItems: 'center', bgcolor: '#eaeaeaff'}}>
       {seatGroups.map((group, index) => (
         <Card key={index} sx={{ width: '45%', minWidth: 220 }}>
           <CardContent>
