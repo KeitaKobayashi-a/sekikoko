@@ -43,13 +43,11 @@ function setupServer() {
   passport.use(
     new LocalStrategy(async function (username, password, done) {
       const user = await db('users').where({ username }).first();
-
       if (!user) {
         return done(null, false, {
           message: 'ユーザーIDが正しくありません。',
         });
       }
-
       const isMatch = await bcrypt.compare(password, user.password);
 
       if (!isMatch)

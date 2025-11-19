@@ -23,7 +23,6 @@ export default function SignIn() {
       credentials: 'include', 
     });
     const json = await res.json()
-    console.log(json)
     setLoginUser(json.user.username)
   };
   return (
