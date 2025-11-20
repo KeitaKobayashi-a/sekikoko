@@ -18,16 +18,11 @@
 # Requirement
  
  
-* bcrypt
-* cookie-parser
-* cors
-* dotenv
+* React
+* Node.js
+* JavaScript
+* Postgres
 * express
-* express-session
-* knex
-* passport
-* passport-local
-* pg
  
 # Installation
  
@@ -49,7 +44,7 @@
 # Author
  
  
-* しゃかぽて
+* 小林　圭汰
 * JR東日本
 * kobayashi-keita@jreast.co.jp
  

@@ -11,6 +11,7 @@ const session = require('express-session');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const path = require('path');
+const {localSt, serialize, deserialize, isLoggedIn} = require('./utils/authenticate')
 
 function setupServer() {
   const app = express();
@@ -41,42 +42,14 @@ function setupServer() {
   app.use(passport.session());
 
   passport.use(
-    new LocalStrategy(async function (username, password, done) {
-      const user = await db('users').where({ username }).first();
-      if (!user) {
-        return done(null, false, {
-          message: 'ユーザーIDが正しくありません。',
-        });
-      }
-      const isMatch = await bcrypt.compare(password, user.password);
-
-      if (!isMatch)
-        return done(null, false, {
-          message: 'パスワードが正しくありません。',
-        });
-      return done(null, user);
-    })
+    new LocalStrategy(localSt)
   );
 
-  passport.serializeUser((user, done) => {
-    done(null, user.id);
-  });
+  passport.serializeUser(serialize);
 
-  passport.deserializeUser(async (id, done) => {
-    try {
-      const user = await db('users').where({ id }).first();
-      done(null, user);
-    } catch (err) {
-      done(err);
-    }
-  });
+  passport.deserializeUser(deserialize);
 
-  const isLoggedIn = (req, res, next) => {
-    if (req.isAuthenticated && req.isAuthenticated()) {
-      return next();
-    }
-    return res.status(401).json({ message: 'ログインしてください' });
-  };
+
 
   app.get('/seats', async (req, res) => {
     res.json(await readSeats(db));
